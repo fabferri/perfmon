@@ -19,6 +19,20 @@ Before running the script you should store in the folder of both hosts (iperf cl
 - the **psping**
 - install on the host **Tshark**
 
+##### Windows Firewall  #####
+To enable ping through the Windows firewall:
+
+**Set-NetFirewallRule -DisplayName "File and Printer Sharing (Echo Request - ICMPv4-In)" -enabled True -Profile Any**
+
+To enable iperf ports (TCP 5201, UDP 5201) through the windows firewall
+
+**New-NetFirewallRule -DisplayName "iperf-TCP" -Name "iperf-TCP" -Direction Inbound –Protocol TCP –LocalPort 5201 -Action Allow -Profile Any**
+
+##### Wireshark #####
+There is no silent installation of winPCap. Only the version Pro provides silent installation.
+To capture with Tshark all traffic in non-promiscuous mode,  with exception of RDP for 300 seconds:
+
+**tshark -i 1 -a duration:300 -p -f "not port 3389" -w capture%date:~10,4%%date:~4,2%%date:~7,2%.pcap.pcap**
 
 ####  Note for CentOS hosts
 
@@ -34,6 +48,24 @@ Iperf can be installed from Extra Packages for Enterprise Linux (EPEL) repositor
 
 ``-`` install iperf on that system:
 **sudo yum install iperf**
+
+
+
+On Linux you can use ping with specific options to achieve similar results to psping in windows:
+
+**ping -U -q -c 300 -s 1200 <IP>**
+
+The options are as follows:
+
+
+**-U** display full user-to-user latency, not just network round trip time.
+
+**-q** Print only the first line and the summary
+
+**-c** The number requests to send at one second intervals (300 = 5 minutes worth)
+
+**-s** The number of bytes sent for each ping
+
 
 
 ####  REFERENCE
