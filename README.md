@@ -1,4 +1,4 @@
-#  Scripts to run iperf, psping and Tshark in parallel (beta version)
+#  Scripts to run a group of iperf tests (beta version)
 
 Here a set of scripts to run **iperf** 
 The script has been verified successful with iperf3 on windows 2012 R2 and iperf 2.0.8 on CentOS.
@@ -11,14 +11,15 @@ The script has been verified successful with iperf3 on windows 2012 R2 and iperf
 - **LogFileThreatment.ps1**: accept in input the log of iperf (Linix or windows) and write a new file containing only time and bandwidth in Mbps. the file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
 
 
-####Note for Windows hosts
+##### Note for Windows hosts
 Before running the script you should store in the folder of both hosts (iperf client and iperf server):
 
 - the executable of **iperf3**
 - the **psping**
 - install on the host **Tshark**
 
-####Note for CentOS hosts
+
+##### Note for CentOS hosts
 Iperf can be installed from Extra Packages for Enterprise Linux (EPEL) repository:
 
 ``-`` Checking the package repositories:
@@ -33,7 +34,7 @@ Iperf can be installed from Extra Packages for Enterprise Linux (EPEL) repositor
 **sudo yum install iperf**
 
 
-###  REFERENCE
+####  REFERENCE
 
 **iperf**: https://iperf.fr/
 
