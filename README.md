@@ -11,7 +11,7 @@ The script has been verified successful with iperf3 on windows 2012 R2 and iperf
 - **LogFileThreatment.ps1**: accept in input the log of iperf (Linix or windows) and write a new file containing only time and bandwidth in Mbps. the file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
 
 
-####  Note for Windows hosts
+###  <span style="color:darkblue"> Note for Windows hosts</span> ###
 
 Before running the script you should store in the folder of both hosts (iperf client and iperf server):
 
@@ -19,22 +19,27 @@ Before running the script you should store in the folder of both hosts (iperf cl
 - the **psping**
 - install on the host **Tshark**
 
-##### Windows Firewall  #####
+
+#### Windows Firewall  ####
 To enable ping through the Windows firewall:
 
 **Set-NetFirewallRule -DisplayName "File and Printer Sharing (Echo Request - ICMPv4-In)" -enabled True -Profile Any**
 
-To enable iperf ports (TCP 5201, UDP 5201) through the windows firewall
+To enable iperf ports (TCP 5201, UDP 5201) through the windows firewall:
 
 **New-NetFirewallRule -DisplayName "iperf-TCP" -Name "iperf-TCP" -Direction Inbound –Protocol TCP –LocalPort 5201 -Action Allow -Profile Any**
 
-##### Wireshark #####
+#### Wireshark ####
 There is no silent installation of winPCap. Only the version Pro provides silent installation.
 To capture with Tshark all traffic in non-promiscuous mode,  with exception of RDP for 300 seconds:
 
 **tshark -i 1 -a duration:300 -p -f "not port 3389" -w capture%date:~10,4%%date:~4,2%%date:~7,2%.pcap.pcap**
 
-####  Note for CentOS hosts
+
+
+
+
+###  <span style="color:darkblue">Note for CentOS hosts</span> ###
 
 Iperf can be installed from Extra Packages for Enterprise Linux (EPEL) repository:
 
