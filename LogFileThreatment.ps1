@@ -1,19 +1,13 @@
-<#
-Description:
-   the script get the outcome of iperf log and reduce the date to two columns: time, bandwidth
-   the file can be easly imported in excel to plot the graph.
-   Before running the script adjust the name of file "HOSTFILE_*.txt" (see below)
-#>
-
 $pathFiles = Split-Path -Parent $PSCommandPath 
 $rootPath  = $pathFiles+"\"
 
-$dirList=Get-ChildItem -dir
+
+$dirList=Get-ChildItem -dir $rootPath
 foreach ($singledir in $dirList)
 {
   write-host -foregroundcolor Green "FolderName: "$singledir
   $pathIn=$rootPath+$singledir
-  $Namefile=Get-ChildItem $pathIn -name -Filter HOSTFILE_*.txt  -Exclude PSPING*
+  $Namefile=Get-ChildItem $pathIn -name -Filter *.txt  -Exclude "*psping*"
   write-host -foregroundcolor Yellow "FileName  : "$Namefile
   $fileIn= $pathIn+ "\"+ $Namefile
   write-host $fileIn
@@ -50,7 +44,7 @@ while( !$ins.EndOfStream )
      $line = $ins.ReadLine(); 
      if ($count -eq 0)  ###################### MANIPULATION SINGLE STREAM
      {
-        $status=(($line -Match "\W*(byte)\W*") -and ( $i -ne 0 ) -and ($line -NotMatch "sender") -and ($line -NotMatch "receiver"))
+        $status=(($line -Match "\W*(byte)\W*") -and ($line -Match "sec") -and ( $i -ne 0 ) -and ($line -NotMatch "sender") -and ($line -NotMatch "receiver"))
      }
      else   ###################### MANIPULATION MULITPLE STREAM
      {
@@ -58,7 +52,25 @@ while( !$ins.EndOfStream )
      }
      if ($status)
      { 
+            # remove all before the "]"
+            $pos = $line.IndexOf("]")
+            $line = $line.Substring($pos+1)
+            
+            # remove the presence of space of time interval
+            $pos = $line.IndexOf("sec")
+            $left = $line.Substring(0,$pos)
+            $left=$left.replace(' ','')
+
+            $right =$line.Substring($pos+("sec".Length))
+
+            $pos=$right.IndexOf("Bytes")
+
+            $right=$right.Substring($pos+("Bytes".Length))
+            $right=$right -replace '\s+', ' '
+            $line=$left+$right
+
             $option = [System.StringSplitOptions]::RemoveEmptyEntries
+                     
             $a=$line.split(" ", $option)
 
             for ($i=0; $i -lt $a.length; $i++) 
@@ -89,7 +101,9 @@ while( !$ins.EndOfStream )
                    }
 
             } 
-             
+            # $sampleTimeEnd =$interval.Substring($interval.IndexOf('-')+1)
+            # $sampleTime = $sampleTimeEnd.Substring(0, $sampleTimeEnd.IndexOf("."))
+            # $record= $sampleTime+ "`t"+$b
             $record= $interval+ "`t"+$b
             write-host -ForegroundColor Green $record
             $outs.WriteLine($record);

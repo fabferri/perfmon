@@ -1,12 +1,3 @@
-<#
-set of powershell commands to pre-setup the Windows 2012R2 hosts/VMs to run iperf, psping, tshark.
-the script 
-  -install IIS to run psping on port 80
-  -disable Internet Explorer Enhanced Security Configuration 
-  -setup the firewall to accept UDP and TCP iperf connection on port 80
-  - accept the emula license of psping  
-
-#>
 ### powershell to disable IE Enhanced Security Configuration
 function Disable-InternetExplorerESC {
     $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"

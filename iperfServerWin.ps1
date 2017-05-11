@@ -1,9 +1,15 @@
 ﻿<#
 Description:
    the script to run network benchmarks in iperf
- INPUT VARIABLES:
+   the script runs iperf as server in a powershell job
+ 
+INPUT VARIABLES: the script do not accept input paramenters
 
 NOTE:
+To track the job use the powershell command: get-job
+the powershell command get-job shows the job id.
+to kill the job, get the  job Id and use the command: remove-job <Id>
+
 #>
 
 function Iperf 
@@ -65,7 +71,8 @@ while ($true)
    $labelFile=""
    ### =========================================
    Start-Sleep -s 5
-   $logFile = $rootPath + $time + "\" + "IPERF_SRV_"+ $labelFile + ".txt"
+   $labelFile=(Get-Date -format yyyyMMddHHmmss).ToString()
+   $logFile = $rootPath + $time + "\" + $env:computername+ "_"+ "IPERF_SRV_"+ $labelFile + ".txt"
    $execFile = $rootPath + "iperf3.exe"
    write-host "Logfile--->" $logFile
    $pathExecFile = $rootPath

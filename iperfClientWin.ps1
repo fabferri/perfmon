@@ -28,34 +28,45 @@ REFERENCE:
 
 #>
 ############################# INPUT PARAMS ##############################################
+<#################################################################
 $arrayIperfCmd =(
-"iperf3.exe    -c 10.0.4.4 -P 1 -t 10 -t 10",
-"iperf3.exe -R -c 10.0.4.4 -P 1 -t 10 -t 10",               
-"iperf3.exe    -c 10.0.4.4 -P 1 -t 10 -w 64K",
-"iperf3.exe -R -c 10.0.4.4 -P 1 -t 10 -w 64K",            
-"iperf3.exe    -c 10.0.4.4 -P 1 -t 10 -w 128K",
-"iperf3.exe -R -c 10.0.4.4 -P 1 -t 10 -w 128K",
-"iperf3.exe    -c 10.0.4.4 -P 1 -t 10 -w 256K",
-"iperf3.exe -R -c 10.0.4.4 -P 1 -t 10 -w 256K",
-"iperf3.exe    -c 10.0.4.4 -P 1 -t 10 -w 512K",
-"iperf3.exe -R -c 10.0.4.4 -P 1 -t 10 -w 512K",
-"iperf3.exe    -c 10.0.4.4 -P 1 -t 10 -w 600K",
-"iperf3.exe -R -c 10.0.4.4 -P 1 -t 10 -w 600K",
-"iperf3.exe    -c 10.0.4.4 -P 2 -t 10",
-"iperf3.exe -R -c 10.0.4.4 -P 2 -t 10",
-"iperf3.exe    -c 10.0.4.4 -P 3 -t 10",
-"iperf3.exe -R -c 10.0.4.4 -P 3 -t 10",
-"iperf3.exe    -c 10.0.4.4 -P 4 -t 10",
-"iperf3.exe -R -c 10.0.4.4 -P 4 -t 10"
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -t 10",
+"iperf3.exe -R -c 10.0.2.4 -P 1 -t 10 -t 10",               
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 64K",
+"iperf3.exe -R -c 10.0.2.4 -P 1 -t 10 -w 64K",            
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 128K",
+"iperf3.exe -R -c 10.0.2.4 -P 1 -t 10 -w 128K",
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 256K",
+"iperf3.exe -R -c 10.0.2.4 -P 1 -t 10 -w 256K",
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 512K",
+"iperf3.exe -R -c 10.0.2.4 -P 1 -t 10 -w 512K",
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 600K",
+"iperf3.exe -R -c 10.0.2.4 -P 1 -t 10 -w 600K",
+"iperf3.exe    -c 10.0.2.4 -P 2 -t 10",
+"iperf3.exe -R -c 10.0.2.4 -P 2 -t 10",
+"iperf3.exe    -c 10.0.2.4 -P 3 -t 10",
+"iperf3.exe -R -c 10.0.2.4 -P 3 -t 10",
+"iperf3.exe    -c 10.0.2.4 -P 4 -t 10",
+"iperf3.exe -R -c 10.0.2.4 -P 4 -t 10"
+)
+#####################################################################>
+
+$arrayIperfCmd =(
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10",
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 128K",
+"iperf3.exe    -c 10.0.2.4 -P 1 -t 10 -w 256K"
 )
 
 
-$pspingCmd = "psping64.exe -4 -n 10s 10.0.4.4:80 -nobanner"
-$TsharkCmd = "tshark.exe -i 1 -a duration:10 -p -f ""not port 3389"" -w "
 
-$runPsping = $true
-$runTshark = $false
-$runSysParams = $false
+
+$pspingCmd = "psping64.exe -4 -n 10s 10.0.2.4:80 -nobanner"
+$TsharkCmd = "tshark.exe -i 1 -a duration:10 -p -f ""not port 3389"" -w "
+$SysParamsDuration = "10"
+
+$runPsping    = $true
+$runTshark    = $true
+$runSysParams = $true
 ##########################################################################################
 
 
@@ -120,7 +131,9 @@ function submitIperf
            10 {$p11 =$params[$i]}
            11 {$p12 =$params[$i]}
         }
-      }  
+      } 
+      $timeStart = (Get-Date -format yyy_MM_dd-HH:mm:ss).toString()
+ 
       cmd /c  $pathExecFile$p1 $p2 $p3 $p4 $p5 $p6 $p7 $p8 $p9 $p10 $p11 $p12
 
 #####     cmd /c  echo "IPERF: $p1 $p2 $p3 $p4 $p5 $p6 $p7 $p8 $p9 $p10 $p11 $p12"  >> $logFile
@@ -136,7 +149,7 @@ function submitIperf
 
           $a=Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias "Ethernet 2"
           $ipInterface=$a.IPAddress
-          $hostName ="VM: "+$env:computername+" -IP: "+ $ipInterface
+          $hostName ="VM: "+$env:computername+" -IP: "+ $ipInterface + " Startime: " + $timeStart
           $f = Get-Content $logFile
           Set-Content $logFile –value $hostName, $f
 
@@ -229,16 +242,16 @@ function CollectPerf
          [string]$hostIPAddress,            
          [string]$logFolder ,
          [int]$sampleInterval,
-         [int]$duration                   
+         [int]$SysParamsDuration                   
        ) 
 
     write-host ">>> hostname            :" $hostName
     write-host ">>> IP Addr             :" $hostIPAddress
     write-host ">>> Folder              :" $logFolder
     write-host ">>> SamplingTime        :" $sampleInterval
-    write-host ">>> Duration            :" $duration
+    write-host ">>> Duration            :" $SysParamsDuration
     $singleJob=Start-Job -Name "counters" -ScriptBlock { 
-          param ($hostName, $hostIPAddress, $logFolder, $sampleInterval, $duration) 
+          param ($hostName, $hostIPAddress, $logFolder, $sampleInterval, $SysParamsDuration) 
 
           $delimiter = "`t"     
           $params = @("\Processor(_total)\% Processor Time",
@@ -302,7 +315,7 @@ function CollectPerf
             $a=$a.replace(" ","")
             $arrayParamName += @($a)  
        }
-       $NumSamples=[math]::floor($duration/$sampleInterval)
+       $NumSamples=[math]::floor($SysParamsDuration/$sampleInterval)
        $metrics =Get-Counter -ComputerName $hostIPAddress -Counter $params -SampleInterval $sampleInterval -MaxSamples $NumSamples  
 
        foreach($metric in $metrics)            
@@ -321,18 +334,18 @@ function CollectPerf
                $timestamp=$obj[$i].Timestamp
                $record=$timestamp.ToString("dd-MM-yyyy HH:mm:ss",[System.Globalization.CultureInfo]::InvariantCulture)+$delimiter+$counterName+$delimiter+$value
 
-               $arrayParamName
+               # $arrayParamName
                $File=$logFolder+"\"+$hostName+"-"+$arrayParamName[$i]+".txt"
-               write-host -ForegroundColor Cyan $record
-               out-file -Append -filepath $File  -inputobject $record -encoding ASCII  
-               if ($i -eq ($obj.Count-1))
-               { 
-                   $str="-------------------------------------------------------"
-                   write-host -ForegroundColor Yellow $str
-               }
+               out-file -Append -filepath $File  -inputobject $record -encoding ASCII
+               # write-host -ForegroundColor Cyan $record 
+               # if ($i -eq ($obj.Count-1))
+               # { 
+               #    $str="-------------------------------------------------------"
+               #    write-host -ForegroundColor Yellow $str
+               # }
            }
        }
-     } -ArgumentList ($hostName, $hostIPAddress, $logFolder, $sampleInterval, $duration)
+     } -ArgumentList ($hostName, $hostIPAddress, $logFolder, $sampleInterval, $SysParamsDuration)
      return $singleJob
 }
 function statusJobs
@@ -435,7 +448,7 @@ foreach ($iperfCmd in $arrayIperfCmd)
   ### =========================================
   if ( $runPsping)
   {
-     $logFile = $rootPath+$time + "\" + "PSPING_"+ $labelFile + ".txt"
+     $logFile = $rootPath+$time + "\" + $env:computername+ "_"+ "psping_"+ $labelFile + ".txt"
      $pathExecFile = $rootPath 
      write-host -foreground Green "PSPINGCMD: "$pspingCmd  
      $singleJob=submitJobPSPING $pathExecFile $pspingCmd $logFile  
@@ -444,7 +457,7 @@ foreach ($iperfCmd in $arrayIperfCmd)
   ### =========================================  
   if ($runTshark)
   {
-     $logFile = $rootPath + $time + "\" + $env:computername+ "_"+ "TSHARK_"+ $labelFile + ".cap"
+     $logFile = $rootPath + $time + "\" + $env:computername+ "_"+ "tshark_"+ $labelFile + ".cap"
      $pathExecFile ="C:\Program Files\Wireshark\"
    
      $TsharkCmdFinal = $TsharkCmd+$logFile
@@ -457,19 +470,19 @@ foreach ($iperfCmd in $arrayIperfCmd)
   {
      ### Submit a job to collect system counters.
      $hostName = $env:computername
-     $logFolder=$rootPath+$time +"\"+"Counters"+"\"
+     $logFolder=$rootPath + $time +"\"+ $env:computername+ "_" + "syscounters"+"\"
      $hostIPAddress="127.0.0.1"
      $sampleInterval = 1
      write-host "hostname:" $hostName "- IPAddress:" $hostIPAddress "- logFolder" $logFolder
-     $singleJob=CollectPerf $hostName $hostIPAddress $logFolder $sampleInterval $duration
+     $singleJob=CollectPerf $hostName $hostIPAddress $logFolder $sampleInterval $SysParamsDuration
      $Jobs += @($singleJob) 
   }  
 
-  $logFile = $rootPath + $time + "\" + $env:computername+ "_"+ $labelFile + ".txt"
+  $logFile = $rootPath + $time + "\" + $env:computername+ "_"+ "iperf"+ $labelFile + ".txt"
   $execFile = $rootPath + "iperf3.exe"
   $pathExecFile = $rootPath
   $cmd=$iperfCmd -replace '\s+',  " "
-  $iperfCmd = $cmd+" --logfile "+$logFile
+  $iperfCmd = $cmd+" --logfile "+ $logFile
   write-host -foreground Yellow "IperfCMD: "$iperfCmd 
   $singleJob=submitIperf $pathExecFile $iperfCmd $logFile 
   $Jobs += @($singleJob)
