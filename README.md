@@ -11,7 +11,7 @@ The script has been verified successful with iperf3 on windows 2012 R2 and iperf
 - **LogFileThreatment.ps1**: accept in input the log of iperf (Linix or windows) and write a new file containing only time and bandwidth in Mbps. the file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
 
 
-#### Note for Windows hosts
+###  Note for Windows hosts
 
 Before running the script you should store in the folder of both hosts (iperf client and iperf server):
 
@@ -20,7 +20,7 @@ Before running the script you should store in the folder of both hosts (iperf cl
 - install on the host **Tshark**
 
 
-#### Note for CentOS hosts
+###  Note for CentOS hosts
 
 Iperf can be installed from Extra Packages for Enterprise Linux (EPEL) repository:
 
