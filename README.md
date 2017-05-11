@@ -12,6 +12,7 @@ The script has been verified successful with iperf3 on windows 2012 R2 and iperf
 
 
 ##### Note for Windows hosts
+
 Before running the script you should store in the folder of both hosts (iperf client and iperf server):
 
 - the executable of **iperf3**
@@ -20,6 +21,7 @@ Before running the script you should store in the folder of both hosts (iperf cl
 
 
 ##### Note for CentOS hosts
+
 Iperf can be installed from Extra Packages for Enterprise Linux (EPEL) repository:
 
 ``-`` Checking the package repositories:
