@@ -1,17 +1,16 @@
-#  Scripts to run a group of iperf tests (beta version)
+#  Scripts to run iperf in sequence (beta version)
 
-Here a set of scripts to run **iperf** 
-The script has been verified successful with iperf3 on windows 2012 R2 and iperf 2.0.8 on CentOS.
+Here a set of scripts to run **iperf** in sequence. 
+The script has been verified successful with iperf3 on Windows 2012 R2 and iperf 2.0.8 on CentOS.
 
-- **hostPreSetup.ps1**: contains a set of powershell commands  to prepare the windows 2012R2 hosts, before running iperf and psping.
-- **iperfClientLix.sh**:run in bash multiple iperf commands in sequence, with the role of iperf client
-- **iperfClientWin.ps1**: run in powershell multiple iperf commands in sequence, with the role of iperf client
-- **iperfServerLix.sh**: run in bash the iperf with the role of iperf server
-- **iperfServerWin.ps1**: run in powershell the iperf with the role of iperf server
-- **LogFileThreatment.ps1**: accept in input the log of iperf (Linix or windows) and write a new file containing only time and bandwidth in Mbps. the file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
+- **clientiperf.sh**: run in bash multiple iperf commands in sequence, with the role of iperf client
+- **clientiperf.ps1**: run in powershell multiple iperf commands in sequence, with the role of iperf client
+- **serveriperf.sh**: run in bash the iperf with the role of iperf server
+- **serveriperf.ps1**: run in powershell the iperf with the role of iperf server
+- **logFileThreatment.ps1**: accept in input the log of iperf (Linix or windows) and write a new file containing only time and bandwidth in Mbps. the file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
+- **winHostPreSetup.ps1**: contains a set of powershell commands  to prepare the windows 2012R2 hosts, before running iperf and psping.
 
-
-###  <span style="color:darkblue"> Note for Windows hosts</span> ###
+###  Note for Windows hosts ###
 
 Before running the script you should store in the folder of both hosts (iperf client and iperf server):
 
@@ -21,6 +20,9 @@ Before running the script you should store in the folder of both hosts (iperf cl
 
 
 #### Windows Firewall  ####
+
+The script **winHostPreSetup.ps1** contains some powershell commands to presetup the host (i.e. open the port of firewall to allow iperf traffic).
+
 To enable ping through the Windows firewall:
 
 **Set-NetFirewallRule -DisplayName "File and Printer Sharing (Echo Request - ICMPv4-In)" -enabled True -Profile Any**

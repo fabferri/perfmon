@@ -1,16 +1,16 @@
 #!/bin/bash
 #
 # Run the script in background by the following command:
-# $ nohup ./iperfClientLix.sh &
+# $ nohup ./clientiperf.sh &
 #
 # Track the status of background process by command jobs -l; you should see the process in status "Running" or "Done".
 # the process is removed when the execution of the script is completed.
 #  $ jobs -l
 #
-# [1]+ 48429 Running     nohup ./iperfClientLix.sh &
+# [1]+ 48429 Running     nohup ./clientiperf.sh &
 #
 # $ jobs -l
-# [1]+ 48429 Done        nohup ./iperfClientLix.sh
+# [1]+ 48429 Done        nohup ./clientiperf.sh
 
 declare -a commands=(
 "iperf -P 1 -c 10.0.1.5 -t 600 -i 1 -f M"

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # run the server component by command:
-# $ nohup ./iperfServerLix.sh &
+# $ nohup ./serveriperf.sh &
 #
 # Track the status of background process by command:
 # $ jobs -l
