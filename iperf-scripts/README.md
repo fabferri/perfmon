@@ -1,13 +1,31 @@
-#  Scripts to run iperf in sequence (beta version)
+<properties
+   pageTitle="Scripts to run multiple iperf tests in sequence"
+   description="scripts in Windows and bash to run multiple iperf test in sequence"
+   services=""
+   documentationCenter="na"
+   authors="fabferri"
+   manager=""
+   editor=""/>
+
+<tags
+   ms.service="configuration-Example-Azure"
+   ms.devlang="na"
+   ms.topic="article"
+   ms.tgt_pltfrm="na"
+   ms.workload="na"
+   ms.date="02/05/2017"
+   ms.author="fabferri" />
+
+#  Scripts to run multiple iperf tests in sequence (beta version)
 
 Here a set of scripts to run **iperf** in sequence. 
 The script has been verified successful with iperf3 on Windows 2012 R2 and iperf 2.0.8 on CentOS.
 
-- **clientiperf.sh**: run in bash multiple iperf commands in sequence, with the role of iperf client
-- **clientiperf.ps1**: run in powershell multiple iperf commands in sequence, with the role of iperf client
-- **serveriperf.sh**: run in bash the iperf with the role of iperf server
+- **clientiperf.sh**: bash script to run multiple iperf commands in sequence, with the role of iperf client
+- **clientiperf.ps1**: powershell script to run multiple iperf commands in sequence, with the role of iperf client
+- **serveriperf.sh**: bash script to run iperf with the role of iperf server
 - **serveriperf.ps1**: run in powershell the iperf with the role of iperf server
-- **logFileThreatment.ps1**: accept in input the log of iperf (Linix or windows) and write a new file containing only time and bandwidth in Mbps. the file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
+- **logFileThreatment.ps1**: the powershell script accepts in input the iperf log file (Linix or windows) and write a new file containing only time and bandwidth in Mbps. The file generate in output can be easily imported in Excel to plot the graph (time, bandwidth). 
 - **winHostPreSetup.ps1**: contains a set of powershell commands  to prepare the windows 2012R2 hosts, before running iperf and psping.
 
 ###  Note for Windows hosts ###
