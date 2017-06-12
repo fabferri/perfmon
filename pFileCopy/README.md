@@ -19,14 +19,8 @@
 #  Scripts to copy in parallel multiple files to a destination folder
 Here two scripts:
 
-
-- The powersheshll script use jobs to run multiple robocopy commands in parallel. The script can be easily change with different command line.
-- 
-
-
-
-
-
+- **pFilesCopy.ps1**: The powersheshll script use jobs to run multiple robocopy commands in parallel. The script can be easily change with different command line.
+- **pCopy.sh**: The bash script run multiple scp commands in parallel.
 
 
 <!--Image References-->
